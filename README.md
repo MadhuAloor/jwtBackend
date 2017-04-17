@@ -1,2 +1,0 @@
-# jwtBackend
-token based authentication 
