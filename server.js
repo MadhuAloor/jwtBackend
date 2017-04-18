@@ -143,14 +143,9 @@ apiRoutes.get('/', function(req, res) {
 	res.json({ message: 'Welcome to the coolest API on earth!' });
 });
 
-apiRoutes.get('/users', function(req, res) {
-	User.find({}, function(err, users) {
-		res.json(users);
-	});
-});
 
 apiRoutes.get('/getlocation', function(req, res) {
-	LocationInfo.find({}, function(err, location) {
+	LocationInfo.find({username:req.headers['username']}, function(err, location) {
 		if(err)
 		   res.json({err:err});
 		res.json({success:true,data:location});
@@ -161,7 +156,8 @@ apiRoutes.post('/location', function(req, res) {
   	var loc = new LocationInfo({ 
 		place: req.body['place'],
 		longtitude: req.body['longtitude'],
-		lattitude: req.body['lattitude']
+		lattitude: req.body['lattitude'],
+		username:req.body['username']
 	});
 	loc.save(function(err) {
 		if (err) res.json({ err: err });
